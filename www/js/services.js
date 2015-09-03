@@ -47,4 +47,34 @@ angular.module('starter.services', [])
       return null;
     }
   };
+})
+
+.factory('OrganizationsFactory', function() {
+
+  var orgs = [{
+    name: 'InnFancy',
+    address: 'You on your way',
+    phone: '8976431321'
+  }, {
+    name: 'Annex',
+    address: 'It\'s address',
+    phone: '987-000-000-0'
+  }];
+
+  return {
+    all: function() {
+      return orgs;
+    },
+    remove: function(chat) {
+      orgs.splice(orgs.indexOf(chat), 1);
+    },
+    get: function(orgName) {
+      for (var i = 0; i < orgName.length; i++) {
+        if (orgs[i].name === orgName) {
+          return orgs[i];
+        }
+      }
+      return null;
+    }
+  };
 });

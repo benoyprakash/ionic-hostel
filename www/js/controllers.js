@@ -46,4 +46,13 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
 })
+
+.controller('OrganizationsCtrl', function($scope, OrganizationsFactory) {
+
+
+  $scope.organizations = OrganizationsFactory.all();
+  $scope.currentOrg = {
+    enableFriends: true
+  };
+})
 ;

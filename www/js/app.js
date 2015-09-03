@@ -98,6 +98,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
   })
+
+  .state('organizations', {
+    url: '/settings/organizations',
+      views: {
+        'organizations-list': {
+          templateUrl: 'templates/organizations/organizations.html',
+          controller: 'OrganizationsCtrl'
+        }
+      }
+  })
   ;
 
   // if none of the above states are matched, use this as the fallback
