@@ -37,4 +37,13 @@ angular.module('starter.controllers', [])
     Chats.remove(chat);
   };
 })
+
+.controller('SettingsCtrl', function($scope, Chats) {
+
+
+  $scope.settings = Chats.all();
+  $scope.currentOrg = {
+    enableFriends: true
+  };
+})
 ;

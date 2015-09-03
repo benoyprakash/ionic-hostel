@@ -87,7 +87,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'CustomersCtrl'
         }
       }
-  });
+  })
+
+    .state('tab.settings', {
+    url: '/settings',
+      views: {
+        'tab-settings': {
+          templateUrl: 'templates/settings/settings.html',
+          controller: 'SettingsCtrl'
+        }
+      }
+  })
+  ;
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
