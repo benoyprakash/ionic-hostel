@@ -50,24 +50,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
+  // .state('tab.chats', {
+  //     url: '/chats',
+  //     views: {
+  //       'tab-chats': {
+  //         templateUrl: 'templates/tab-chats.html',
+  //         controller: 'ChatsCtrl'
+  //       }
+  //     }
+  //   })
+    // .state('tab.chat-detail', {
+    //   url: '/chats/:chatId',
+    //   views: {
+    //     'tab-chats': {
+    //       templateUrl: 'templates/chat-detail.html',
+    //       controller: 'ChatDetailCtrl'
+    //     }
+    //   }
+    // })
 
   .state('tab.account', {
     url: '/account',
@@ -88,6 +88,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
   })
+    .state('tab.customer-details', {
+      url: '/customers/:custId',
+      views: {
+        'tab-customers': {
+          templateUrl: 'templates/customers/customer-details.html',
+          controller: 'CustomerDetailsCtrl'
+        }
+      }
+    })
 
     .state('tab.settings', {
     url: '/settings',
@@ -108,9 +117,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
   })
+
+    .state('tab.rooms', {
+      url: '/rooms',
+      views: {
+        'tab-rooms': {
+          templateUrl: 'templates/rooms/rooms.html',
+          controller: 'RoomsCtrl'
+        }
+      }
+    })
+
+      .state('tab.rooms-details', {
+      url: '/rooms/:roomId',
+      views: {
+        'tab-rooms': {
+          templateUrl: 'templates/rooms/room-details.html',
+          controller: 'RoomDetailCtrl'
+        }
+      }
+    })
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  //$urlRouterProvider.otherwise('/tab/dash');
 
 });

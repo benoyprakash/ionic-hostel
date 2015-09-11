@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
 
 .controller('CustomersCtrl', function($scope, Chats) {
 
-  $scope.chats = Chats.all();
+  $scope.customers = Chats.all();
   $scope.settings = {
     enableFriends: true
   };
@@ -37,6 +37,12 @@ angular.module('starter.controllers', [])
     Chats.remove(chat);
   };
 })
+
+.controller('CustomerDetailsCtrl', function($scope, $stateParams, Chats) {
+  $scope.cust = Chats.get($stateParams.roomId);
+  $scope.testDate = "02-19-1990";
+})
+
 
 .controller('SettingsCtrl', function($scope, Chats) {
 
@@ -55,4 +61,18 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
 })
+
+.controller('RoomsCtrl', function($scope, Chats) {
+
+  $scope.rooms = Chats.all();
+  $scope.remove = function(chat) {
+    Chats.remove(chat);
+  };
+})
+
+.controller('RoomDetailCtrl', function($scope, $stateParams, Chats) {
+  $scope.room = Chats.get($stateParams.roomId);
+})
+
+
 ;

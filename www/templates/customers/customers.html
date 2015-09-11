@@ -3,18 +3,29 @@ displaying all customers
 -->
 <ion-view view-title="Customers">
   <ion-content>
+
+<div class="bar bar-header item-input-inset">
+  <label class="item-input-wrapper">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    <input type="search" placeholder="Search">
+  </label>
+  <button class="button button-clear">
+    Cancel
+  </button>
+</div>
+
     <ion-list>
     	<ion-toggle  ng-model="settings.enableFriends">
         	<h3 class="title">Customer status</h3>
     	</ion-toggle>
 	
-	    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
+	    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="cust in customers" type="item-text-wrap" href="#/tab/customers/{{cust.id}}">
+        <img ng-src="{{cust.face}}">
+        <h2>{{cust.name}}</h2>
+        <p>{{cust.lastText}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+        <ion-option-button class="button-assertive" ng-click="remove(cust)">
           Delete
         </ion-option-button>
       </ion-item>
@@ -22,3 +33,5 @@ displaying all customers
     </ion-list>
   </ion-content>
 </ion-view>
+
+
