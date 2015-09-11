@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
 
 .controller('CustomerDetailsCtrl', function($scope, $stateParams, Chats) {
   $scope.cust = Chats.get($stateParams.roomId);
-  $scope.testDate = "02-19-1990";
+  $scope.testDate = '02-19-1990';
 })
 
 
@@ -75,4 +75,32 @@ angular.module('starter.controllers', [])
 })
 
 
+.controller('CameraCtrl', function($scope, Camera) {
+
+
+  $scope.takePicture = function() {
+  navigator.camera.getPicture(function(imageURI) {
+    alert("camera");
+
+    // imageURI is the URL of the image that we can use for
+    // an <img> element or backgroundImage.
+
+  }, function(err) {
+
+    // Ruh-roh, something bad happened
+
+  }, cameraOptions);
+}
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+    }, function(err) {
+      console.err(err);
+    });
+  };
+})
+
 ;
+
+

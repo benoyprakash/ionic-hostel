@@ -4,12 +4,14 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{cust.name}}">
+<ion-view view-title="{{cust.name}}" ng-controller="CameraCtrl">
   <ion-content class="padding">
 
    <div class="list">
     <label class="item item-input item-stacked-label">
-      Photo
+      <button class="button button-stable">
+        <i class="ion-ios-film-outline" ng-click="takePicture"></i>
+      </button>
     </label>
     <label class="item item-input item-stacked-label">
       <span class="input-label">First Name</span>
@@ -29,7 +31,7 @@
     </label>
     <label class="item item-input item-stacked-label">
       <span class="input-label">DOB</span>
-      <input type="date" ng-model="testDate" class="col col-50">
+      <!--<input type="date" ng-model="testDate" class="col col-50">-->
     </label>
     <label class="item item-input item-stacked-label">
       <span class="input-label">Address Line 1</span>
