@@ -1,0 +1,13 @@
+http://ionicframework.com/docs/guide/publishing.html
+
+1) cordova plugin rm cordova-plugin-console
+
+2) cordova build --release android
+
+key already generated
+
+3) jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\my-release-key.keystore G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\android-release-unsigned.apk hostel-app-key
+
+From location " C:\Users\lk\AppData\Local\Android\sdk\build-tools\23.0.0\ "
+
+4) zipalign -v 4 G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\android-release-unsigned.apk G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\innfancy.apk
