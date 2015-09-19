@@ -4,33 +4,91 @@ displaying all customers
 <ion-view view-title="Customers">
   <ion-content>
 
-<div class="bar bar-header item-input-inset">
-  <label class="item-input-wrapper">
-    <i class="icon ion-ios-search placeholder-icon"></i>
-    <input type="search" placeholder="Search">
-  </label>
-  <button class="button button-clear">
-    Cancel
-  </button>
+  <div ng-controller="CustomersCtrl">
+  
+  <form class="bar bar-header item-input-inset">
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="searchKey">
+      </label>
+      <button class="button button-clear">
+        x
+      </button>
+    </div>
+  </form>
+  
+  <!--
+  http://codepen.io/sevilayha/pen/AmFLE
+  <table class="table table-bordered table-striped">
+   
+
+    <thead>
+      <tr>
+        <td>
+          <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Sushi Roll 
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
+          Fish Type 
+            <span ng-show="sortType == 'fish' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'fish' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
+          Taste Level 
+            <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
+        <td>{{ roll.name }}</td>
+        <td>{{ roll.fish }}</td>
+        <td>{{ roll.tastiness }}</td>
+      </tr>
+    </tbody>
+    
+  </table> 
+
+-->
+
+<div class="list">
+
+    <ion-item class="item item-divider">
+      <div class="row">
+        <div class="col-80">
+           <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            Name 
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </div>
+        <div class="col-20">Room</div>
+      </div>
+    </ion-item>
+
+    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="cust in customers | orderBy:sortType:sortReverse | filter:searchKey" type="item-text-wrap" href="#/tab/customers/{{cust.id}}">
+        
+      <img ng-src="{{cust.face}}">
+      <h2>{{cust.name}}</h2>
+      <p>{{cust.lastText}}</p>
+      <i class="icon ion-chevron-right icon-accessory"></i>
+    </ion-item>
+
 </div>
 
-    <ion-list>
-    	<ion-toggle  ng-model="settings.enableFriends">
-        	<h3 class="title">Customer status</h3>
-    	</ion-toggle>
-	
-	    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="cust in customers" type="item-text-wrap" href="#/tab/customers/{{cust.id}}">
-        <img ng-src="{{cust.face}}">
-        <h2>{{cust.name}}</h2>
-        <p>{{cust.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
 
-        <ion-option-button class="button-assertive" ng-click="remove(cust)">
-          Delete
-        </ion-option-button>
-      </ion-item>
+</div>
 
-    </ion-list>
   </ion-content>
 </ion-view>
 
