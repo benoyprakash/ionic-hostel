@@ -28,6 +28,7 @@ angular.module('hostelApp.controllers', [])
 })
 
 .controller('CustomersCtrl', function($scope, Chats) {
+  /* For list of customers */
 
   $scope.customers = Chats.all();
   $scope.settings = {
@@ -53,14 +54,40 @@ angular.module('hostelApp.controllers', [])
 
 })
 
-.controller('CustomerDetailsCtrl', function($scope, $stateParams, Chats) {
-  $scope.cust = Chats.get($stateParams.roomId);
-  $scope.testDate = '02-19-1990';
+.controller('CustomerDetailsCtrl', function($scope, $stateParams, Camera) {
+/* For individual customer */
+
+
+  $scope.testDate = new Date('02-19-1990');
+
+  $scope.getPhoto = function() {
+    console.log('Getting camera');
+    Camera.getPicture({
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: false
+    }).then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    });
+    /*
+    navigator.camera.getPicture(function(imageURI) {
+      console.log(imageURI);
+    }, function(err) {
+    }, { 
+      quality: 50,
+      destinationType: Camera.DestinationType.DATA_URL
+    });
+    */
+  }
+
+
 })
 
-
 .controller('SettingsCtrl', function($scope, Chats) {
-
 
   $scope.settings = Chats.all();
   $scope.currentOrg = {
@@ -77,44 +104,15 @@ angular.module('hostelApp.controllers', [])
   };
 })
 
-.controller('RoomsCtrl', function($scope, Chats) {
+.controller('RoomsCtrl', function($scope, RoomsFactory) {
 
-  $scope.rooms = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  $scope.rooms = RoomsFactory.all();
 })
 
-.controller('RoomDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.room = Chats.get($stateParams.roomId);
+.controller('RoomDetailCtrl', function($scope, $stateParams, RoomsFactory) {
+  $scope.room = RoomsFactory.getRoomById($stateParams.roomId);
 })
 
-
-.controller('CameraCtrl', function($scope, Camera) {
-
-
-  $scope.takePicture = function() {
-  navigator.camera.getPicture(function(imageURI) {
-    alert("camera");
-
-    // imageURI is the URL of the image that we can use for
-    // an <img> element or backgroundImage.
-
-  }, function(err) {
-
-    // Ruh-roh, something bad happened
-
-  }, cameraOptions);
-}
-
-  $scope.getPhoto = function() {
-    Camera.getPicture().then(function(imageURI) {
-      console.log(imageURI);
-    }, function(err) {
-      console.err(err);
-    });
-  };
-})
 
 ;
 
