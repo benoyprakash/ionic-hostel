@@ -1,0 +1,39 @@
+<ion-view view-title="New / Edit Organization" >
+  <ion-nav-buttons side="right">
+    <a class="button" href="#/" ng-click="saveOrganizationDetails()">
+      Save
+    </a>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+   <div class="list">
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Name</span>
+      <input type="text" ng-model="currentOrganization.name" placeholder="">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Phone</span>
+      <input type="number" ng-model="currentOrganization.phone" placeholder="">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Address Line 1</span>
+      <input type="text" ng-model="currentOrganization.address1" placeholder="">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Address Line 2</span>
+      <input type="text" ng-model="currentOrganization.address2" placeholder="">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Address Line 3</span>
+      <input type="text" ng-model="currentOrganization.address3" placeholder="">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Contact Person</span>
+      <input type="text" ng-model="currentOrganization.contactPerson" placeholder="">
+    </label>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">Comments</span>
+      <input type="text" ng-model="currentOrganization.comments" placeholder="">
+    </label>    
+  </div>
+  </ion-content>
+</ion-view>

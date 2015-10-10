@@ -52,10 +52,12 @@ angular.module('hostelApp.services', [])
 .factory('OrganizationsFactory', function() {
 
   var orgs = [{
+    id : 1,
     name: 'InnFancy',
     address: 'You on your way',
     phone: '8976431321'
   }, {
+    id : 2,
     name: 'Annex',
     address: 'It\'s address',
     phone: '987-000-000-0'
@@ -63,10 +65,24 @@ angular.module('hostelApp.services', [])
 
   return {
     all: function() {
-      return orgs;
-    },
-    remove: function(chat) {
-      orgs.splice(orgs.indexOf(chat), 1);
+
+      var P_Organization = Parse.Object.extend("P_Organization");
+      var query = new Parse.Query(P_Organization);
+        query.get({
+          success: function(organizations) {
+            // The object was retrieved successfully.
+            console.log(JSON.stringify(organizations));
+            return organizations;
+          },
+          error: function(object, error) {
+            alert(JSON.stringify(error));
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+
+      return null;
     },
     get: function(orgName) {
       for (var i = 0; i < orgName.length; i++) {
@@ -75,6 +91,36 @@ angular.module('hostelApp.services', [])
         }
       }
       return null;
+    }, 
+    saveOrganization: function(organization){
+
+
+        var P_Organization = Parse.Object.extend("P_Organization");
+        var p_organization = new P_Organization();
+
+
+      p_organization.set("name", organization.name);
+      p_organization.set("phone", organization.phone);
+      p_organization.set("address1", organization.address1);
+      p_organization.set("address2", organization.address2);
+      p_organization.set("address3", organization.address3);
+      p_organization.set("contactPerson", organization.contactPerson);
+      p_organization.set("comments", organization.comments);
+      console.log("before save"+ JSON.stringify(p_organization));
+
+        p_organization.save(null, {
+          success: function(newP_organization) {
+            // Execute any logic that should take place after the object is saved.
+            console.log('New object created with objectId: ' + newP_organization.id);
+            alert("Organization saved successfully.");
+          },
+          error: function(newP_organization, error) {
+            // Execute any logic that should take place if the save fails.
+            // error is a Parse.Error with an error code and message.
+            console.log('Failed to create new object, with error code: ' + error.message);
+            alert("Failed to save Organization data. Please try again.");
+          }
+        });
     }
   };
 })

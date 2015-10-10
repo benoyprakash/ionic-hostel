@@ -34,9 +34,6 @@ angular.module('hostelApp.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
 
 
   $scope.sortType     = 'name'; // set the default sort type
@@ -101,6 +98,31 @@ angular.module('hostelApp.controllers', [])
   $scope.organizations = OrganizationsFactory.all();
   $scope.currentOrg = {
     enableFriends: true
+  };
+})
+
+
+.controller('OrganizationDetailsCtrl', function($scope, $stateParams, OrganizationsFactory) {
+
+    $scope.currentOrganization = { 
+      name: "",
+      phone: "",
+      address1: "",
+      address2: "",
+      address3: "",
+      contactPerson: "",
+      comments: ""
+
+    };
+    alert("Organization, id : " + $stateParams.orgId);
+    $scope.currentOrganization = angular.copy(OrganizationsFactory.get($stateParams.orgId));
+
+// $scope.saveOrganizationDetails = function(){
+//   alert($stateParams.orgId);
+// }
+
+  $scope.saveOrganizationDetails = function(){
+    OrganizationsFactory.saveOrganization($scope.currentOrganization);
   };
 })
 

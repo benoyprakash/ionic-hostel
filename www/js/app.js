@@ -1,3 +1,5 @@
+// Parse Initialization
+Parse.initialize("dpYWs0Je7RriOjJ7faB9YYtyCuDTy5X7AaSKLQeT", "bHwxcFBPgJlpTVAsXYLnwojj2ozNVzNP20CvxHgd");
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -79,12 +81,23 @@ angular.module('hostelApp', ['ionic', 'hostelApp.controllers', 'hostelApp.servic
       }
   })
 
-  .state('organizations', {
+  .state('tab.settings-organizationList', {
     url: '/settings/organizations',
       views: {
-        'organizations-list': {
+        'tab-settings': {
           templateUrl: 'templates/organizations/organizations.html',
           controller: 'OrganizationsCtrl'
+        }
+      }
+  })
+
+
+    .state('tab.settings-organization', {
+    url: '/settings/organizations/:orgId',
+      views: {
+        'tab-settings': {
+          templateUrl: 'templates/organizations/organization-detail.html',
+          controller: 'OrganizationDetailsCtrl'
         }
       }
   })
@@ -111,6 +124,6 @@ angular.module('hostelApp', ['ionic', 'hostelApp.controllers', 'hostelApp.servic
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  //$urlRouterProvider.otherwise('/tab/dash');
 
 });

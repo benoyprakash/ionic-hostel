@@ -2,25 +2,23 @@
 displaying all organizations and for creating organizations
 -->
 <ion-view view-title="Manage Organizations">
+  <ion-nav-buttons side="right">
+    <a class="button" href="#/tab/settings/organizations/{{org.id}}">
+      <i class="ion-ios-plus-outline" data-pack="ios" data-tags="add, include, new, invite, +"></i>
+    </a>
+  </ion-nav-buttons>
   <ion-content>
-  <div class="bar bar-header bar-light">
-  <h1 class="title">bar-light</h1>
-</div>
-bar-stable
-
     <ion-list>
-
-	    <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="org in orgs" type="item-text-wrap" href="#/tab/chats/111">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="org in organizations" type="item-text-wrap" href="#/tab/settings/organizations/{{org.id}}">
         <img ng-src="{{org.face}}">
         <h2>{{org.name}}</h2>
         <p>{{org.address}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
-
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
           Delete
         </ion-option-button>
       </ion-item>
-
     </ion-list>
+    
   </ion-content>
 </ion-view>
