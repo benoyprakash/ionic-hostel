@@ -70,15 +70,15 @@ angular.module('hostelApp.controllers', [])
     }, function(err) {
       console.err(err);
     });
-    /*
-    navigator.camera.getPicture(function(imageURI) {
+    
+/*    navigator.camera.getPicture(function(imageURI) {
       console.log(imageURI);
     }, function(err) {
     }, { 
       quality: 50,
       destinationType: Camera.DestinationType.DATA_URL
-    });
-    */
+    });*/
+    
   }
 
 
@@ -94,35 +94,44 @@ angular.module('hostelApp.controllers', [])
 
 .controller('OrganizationsCtrl', function($scope, OrganizationsFactory) {
 
+ var t1 = [{ 
+      name: "Benoy",
+      phone: 987987987,
+      address1: "Kerala",
+      address2: "India",
+      address3: "Asia",
+      contactPerson: "Benoy",
+      comments: "Nil"
 
-  $scope.organizations = OrganizationsFactory.all();
-  $scope.currentOrg = {
-    enableFriends: true
-  };
+    }];
+  $scope.organizationsList = OrganizationsFactory.all();
+
+  console.log("Controller Log : "+ JSON.stringify($scope.organizationsList));
+
 })
 
 
 .controller('OrganizationDetailsCtrl', function($scope, $stateParams, OrganizationsFactory) {
 
     $scope.currentOrganization = { 
-      name: "",
-      phone: "",
-      address1: "",
-      address2: "",
-      address3: "",
-      contactPerson: "",
-      comments: ""
+      name: "Benoy",
+      phone: 987987987,
+      address1: "Kerala",
+      address2: "India",
+      address3: "Asia",
+      contactPerson: "Benoy",
+      comments: "Nil"
 
     };
-    alert("Organization, id : " + $stateParams.orgId);
-    $scope.currentOrganization = angular.copy(OrganizationsFactory.get($stateParams.orgId));
+    // alert("Organization, id : " + $stateParams.orgId);
+    // $scope.currentOrganization = angular.copy(OrganizationsFactory.get($stateParams.orgId));
 
 // $scope.saveOrganizationDetails = function(){
 //   alert($stateParams.orgId);
 // }
 
   $scope.saveOrganizationDetails = function(){
-    OrganizationsFactory.saveOrganization($scope.currentOrganization);
+    OrganizationsFactory.saveOrganization(this.currentOrganization);
   };
 })
 

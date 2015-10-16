@@ -49,7 +49,7 @@ angular.module('hostelApp.services', [])
   };
 })
 
-.factory('OrganizationsFactory', function() {
+.factory('OrganizationsFactory', function($q) {
 
   var orgs = [{
     id : 1,
@@ -62,28 +62,40 @@ angular.module('hostelApp.services', [])
     address: 'It\'s address',
     phone: '987-000-000-0'
   }];
-
+  
   return {
+
+    // all: function() {
+    //   return orgs;
+    // },
+
+//[{"address1":"Kerala","address2":"India","address3":"Asia","comments":"Nil","contactPerson":"Benoy","name":"Ramdas","phone":987987987,"objectId":"4OKtlbTSBn","createdAt":"2015-10-16T17:37:19.062Z","updatedAt":"2015-10-16T17:37:19.062Z"}
     all: function() {
+    //var defer = $q.defer();
 
       var P_Organization = Parse.Object.extend("P_Organization");
       var query = new Parse.Query(P_Organization);
-        query.get({
-          success: function(organizations) {
+      var orgs = 
+
+        query.find({
+          success: function(orgList) {
             // The object was retrieved successfully.
-            console.log(JSON.stringify(organizations));
-            return organizations;
+            //defer.resolve(organizationsList);
+            orgs = orgList;
+            return orgList;
           },
           error: function(object, error) {
             alert(JSON.stringify(error));
+            //defer.reject(error);
+
             // The object was not retrieved successfully.
             // error is a Parse.Error with an error code and message.
           }
         });
-
-
-      return null;
+      return orgs;
     },
+
+
     get: function(orgName) {
       for (var i = 0; i < orgName.length; i++) {
         if (orgs[i].name === orgName) {
@@ -144,65 +156,148 @@ angular.module('hostelApp.services', [])
     capacity: '2',
     aminities : '2 Bed, Table, Chair, Bath attached',
     image : 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRu6x0KBDbZSboeC0FJCsXOMwar6XyCJfOuoIiyl8luqhPtiFyd'
-  },
-  {
-    id: 'A3',
-    name: '103',
-    floor: '1',
-    capacity: '2',
-    aminities : '2 Bed, Table, Chair, Bath attached',
-    image : 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTSPlqN3p5AYwxOOlJ0vGvYlzbyZwUW1-ntBbzvSRFGJG1_QSTH'
-  },{
-    id: 'A4',
-    name: '104',
-    floor: '1',
-    capacity: '2',
-    aminities : '2 Bed, Table, Chair, Bath attached',
-    image : 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTWIdBn5yMGspA3YjwIQkcb5rj6SKMthzt9JP4NJMKRTyojC6f7PA'
-  },
-  {
-    id: 'A5',
-    name: '105',
-    floor: '1',
-    capacity: '3',
-    aminities : '3 Bed, Table, Chair, Bath attached',
-    image : 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSoW12oX4FL1vWQqPNz4NhGOMs39ekEpu8k92ykOt6cXnLXHzUn'
-  },
-  {
-    id: 'B1',
-    name: '201',
-    floor: '1',
-    capacity: '2',
-    aminities : '2 Bed, Table, Chair, Bath attached',
-    image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv_GWE99rEL6cbG6WIbxdlSJbgtlGjZ-7b2NdTmSQHgMvitlobDA'
   }
-
 
   ];
 
   return {
     all: function() {
-      return rooms;
+
+      var P_Room = Parse.Object.extend("P_Room");
+      var query = new Parse.Query(P_Room);
+        query.get({
+          success: function(rooms) {
+            // The object was retrieved successfully.
+            console.log(JSON.stringify(rooms));
+            return rooms;
+          },
+          error: function(object, error) {
+            alert(JSON.stringify(error));
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+
+      return null;
+
     },
     getRoomById: function(roomId) {
-      for (var i = 0; i < rooms.length; i++) {
-        if (rooms[i].id === roomId) {
-          return rooms[i];
-        }
-      }
+
+      var P_Room = Parse.Object.extend("P_Room");
+      var query = new Parse.Query(P_Room);
+      query.equalTo("roomId", roomId),
+        query.get({
+          success: function(rooms) {
+            // The object was retrieved successfully.
+            console.log(JSON.stringify(rooms));
+            return rooms;
+          },
+          error: function(object, error) {
+            alert(JSON.stringify(error));
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+
       return null;
+
+
     }, 
     getRoomByName: function(roomName) {
-      for (var i = 0; i < rooms.length; i++) {
-        if (rooms[i].name === roomName) {
-          return rooms[i];
-        }
-      }
+
+
+      var P_Room = Parse.Object.extend("P_Room");
+      var query = new Parse.Query(P_Room);
+      query.equalTo("roomName", roomName),
+        query.get({
+          success: function(rooms) {
+            // The object was retrieved successfully.
+            console.log(JSON.stringify(rooms));
+            return rooms;
+          },
+          error: function(object, error) {
+            alert(JSON.stringify(error));
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+
       return null;
+
+
     }
   };
 })
 
+
+.factory('CustomerFactory', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var customers = [{
+    name: 'Benoy',
+    address: 'Kerala',
+    phone: '654654654'
+  }, 
+  {
+    name: 'Moideen',
+    address: 'Kerala',
+    phone: '8754412654'
+  }
+
+  ];
+
+  return {
+    all: function() {
+
+      var P_Customer = Parse.Object.extend("P_Customer");
+      var query = new Parse.Query(P_Customer);
+        query.get({
+          success: function(customers) {
+            // The object was retrieved successfully.
+            console.log(JSON.stringify(customers));
+            return rooms;
+          },
+          error: function(object, error) {
+            alert(JSON.stringify(error));
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+
+      return null;
+
+    },
+
+    getCustomerByName: function(customerName) {
+
+      var P_Customer = Parse.Object.extend("P_Customer");
+      var query = new Parse.Query(P_Customer);
+      query.equalTo("name", customerName),
+        query.get({
+          success: function(customers) {
+            // The object was retrieved successfully.
+            console.log(JSON.stringify(customers));
+            return customers;
+          },
+          error: function(object, error) {
+            alert(JSON.stringify(error));
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+
+      return null;
+
+
+    }
+  };
+})
 
 
 .factory('Camera', ['$q', function($q) {
@@ -221,6 +316,5 @@ angular.module('hostelApp.services', [])
       return q.promise;
     }
   }
-}])
-
-;
+}
+]);
