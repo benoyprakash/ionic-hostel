@@ -5,10 +5,14 @@
     </a>
   </ion-nav-buttons>
   <ion-content class="padding">
-   <div class="list">
+   <div class="list" ng-controller="OrganizationDetailsCtrl">
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">id</span>
+      <input readonly="true" type="text" ng-model="currentOrganization.objectId" placeholder="">
+    </label>
     <label class="item item-input item-stacked-label">
       <span class="input-label">Name</span>
-      <input type="text" ng-model="currentOrganization.name" placeholder="">
+      <input type="text" ng-model="currentOrganization.name" placeholder=":)">
     </label>
     <label class="item item-input item-stacked-label">
       <span class="input-label">Phone</span>

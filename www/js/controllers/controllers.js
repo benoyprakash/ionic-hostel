@@ -1,30 +1,36 @@
 angular.module('hostelApp.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($rootScope, $scope, $localstorage, OrganizationsFactory) {
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+   var localActiveOrg = $localstorage.getObject('activeOrg');
+    if(localActiveOrg == null || localActiveOrg === "\"undefined\""){
+        $scope.selectedOrg = {};
+    } else {
+      $scope.selectedOrg = localActiveOrg;
+      console.log("fetching from local storage : " + $scope.selectedOrg);
+    }
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
+    // ------------------------------------------------------------------
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+    $scope.organizationsList = [];
+    $scope.promise = OrganizationsFactory.all(); 
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+    $scope.promise
+    .then(
+      function(data){
+        
+        var jsonString = JSON.stringify(data);
+        $scope.organizationsList = JSON.parse(jsonString);
+       
+      }, function(error){
+          console.log(error);
+      });
+    // ------------------------------------------------------------------
+    $scope.selectCurrentOrg = function() {
+      $localstorage.setObject('activeOrg', $scope.selectedOrg);
+    };
+    // ------------------------------------------------------------------
+
 })
 
 .controller('CustomersCtrl', function($scope, Chats) {
@@ -92,46 +98,53 @@ angular.module('hostelApp.controllers', [])
   };
 })
 
-.controller('OrganizationsCtrl', function($scope, OrganizationsFactory) {
+.controller('OrganizationsCtrl', function($scope, $timeout,  OrganizationsFactory) {
 
- var t1 = [{ 
-      name: "Benoy",
-      phone: 987987987,
-      address1: "Kerala",
-      address2: "India",
-      address3: "Asia",
-      contactPerson: "Benoy",
-      comments: "Nil"
+    $scope.organizationsList = [];
+    $scope.promise = OrganizationsFactory.all(); 
 
-    }];
-  $scope.organizationsList = OrganizationsFactory.all();
+    $scope.promise
+    .then(
+      function(data){
+        
+        // $scope.organizationsList = data;
+        var jsonString = JSON.stringify(data);
+        $scope.organizationsList = JSON.parse(jsonString);
 
-  console.log("Controller Log : "+ JSON.stringify($scope.organizationsList));
-
+        
+      }, function(error){
+          alert(error);
+      });
 })
 
 
 .controller('OrganizationDetailsCtrl', function($scope, $stateParams, OrganizationsFactory) {
 
-    $scope.currentOrganization = { 
-      name: "Benoy",
-      phone: 987987987,
-      address1: "Kerala",
-      address2: "India",
-      address3: "Asia",
-      contactPerson: "Benoy",
-      comments: "Nil"
-
+    $scope.currentOrganization = {
+      name : "Benoy",
+      address1 : "Kerala"
     };
-    // alert("Organization, id : " + $stateParams.orgId);
-    // $scope.currentOrganization = angular.copy(OrganizationsFactory.get($stateParams.orgId));
+    
+    $scope.promise = OrganizationsFactory.getOrgById($stateParams.orgId); 
+    $scope.promise
+    .then(
+      function(data){
+        if(data.length > 0){
+        var jsonString = JSON.stringify(data[0]);
+        $scope.currentOrganization = JSON.parse(jsonString);
+        }
 
-// $scope.saveOrganizationDetails = function(){
-//   alert($stateParams.orgId);
-// }
+
+       }, function(error){
+          alert(error);
+      });
+  
+    // $scope.saveOrganizationDetails = function(){
+    //   alert($stateParams.orgId);
+    // }
 
   $scope.saveOrganizationDetails = function(){
-    OrganizationsFactory.saveOrganization(this.currentOrganization);
+    OrganizationsFactory.saveOrganization($scope.currentOrganization);
   };
 })
 

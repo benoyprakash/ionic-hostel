@@ -3,11 +3,13 @@
     <div class="list card">
       <div class="item item-divider">Organization</div>
       <div class="item item-body">
-      <select class="col col-50">
-      <option selected>InnFancy</option>
-      <option >Green</option>
-      <option>Red</option>
-    </select>
+        Your Current Organization is : 
+
+<select ng-model="selectedOrg"
+        ng-change="selectCurrentOrg()" 
+        ng-options="org.objectId as org.name for org in  organizationsList" ng-selected="selectedOrg"></select>
+{{selectedOrg}}
+
       </div>
     </div>
     <div class="list card">

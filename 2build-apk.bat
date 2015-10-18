@@ -1,0 +1,3 @@
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\my-release-key.keystore G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\android-release-unsigned.apk hostel-app-key -storepass thesmile
+del "G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\innfancy.apk"
+C:\Users\lk\AppData\Local\Android\sdk\build-tools\23.0.0\zipalign  -v 4 G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\android-release-unsigned.apk G:\innFancyApp\ionic-hostel\platforms\android\build\outputs\apk\innfancy.apk

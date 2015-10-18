@@ -51,58 +51,51 @@ angular.module('hostelApp.services', [])
 
 .factory('OrganizationsFactory', function($q) {
 
-  var orgs = [{
-    id : 1,
-    name: 'InnFancy',
-    address: 'You on your way',
-    phone: '8976431321'
-  }, {
-    id : 2,
-    name: 'Annex',
-    address: 'It\'s address',
-    phone: '987-000-000-0'
-  }];
-  
   return {
-
-    // all: function() {
-    //   return orgs;
-    // },
 
 //[{"address1":"Kerala","address2":"India","address3":"Asia","comments":"Nil","contactPerson":"Benoy","name":"Ramdas","phone":987987987,"objectId":"4OKtlbTSBn","createdAt":"2015-10-16T17:37:19.062Z","updatedAt":"2015-10-16T17:37:19.062Z"}
     all: function() {
-    //var defer = $q.defer();
+      
+      var deferred = $q.defer();
 
       var P_Organization = Parse.Object.extend("P_Organization");
       var query = new Parse.Query(P_Organization);
-      var orgs = 
 
+
+      
         query.find({
           success: function(orgList) {
             // The object was retrieved successfully.
             //defer.resolve(organizationsList);
-            orgs = orgList;
-            return orgList;
+            deferred.resolve(orgList);
           },
           error: function(object, error) {
-            alert(JSON.stringify(error));
-            //defer.reject(error);
-
-            // The object was not retrieved successfully.
-            // error is a Parse.Error with an error code and message.
+            deferred.reject(error);
           }
         });
-      return orgs;
+
+      return deferred.promise;
     },
 
 
-    get: function(orgName) {
-      for (var i = 0; i < orgName.length; i++) {
-        if (orgs[i].name === orgName) {
-          return orgs[i];
-        }
-      }
-      return null;
+    getOrgById: function(orgId) {
+      var deferred = $q.defer();
+
+      var P_Organization = Parse.Object.extend("P_Organization");
+      var query = new Parse.Query(P_Organization);
+      query.equalTo("objectId", orgId);      
+        query.find({
+          success: function(organization) {
+            // The object was retrieved successfully.
+            //defer.resolve(organizationsList);
+            deferred.resolve(organization);
+          },
+          error: function(object, error) {
+            deferred.reject(error);
+          }
+        });
+
+      return deferred.promise;
     }, 
     saveOrganization: function(organization){
 
@@ -137,7 +130,7 @@ angular.module('hostelApp.services', [])
   };
 })
 
-.factory('RoomsFactory', function() {
+.factory('RoomsFactory', function($q) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -183,6 +176,8 @@ angular.module('hostelApp.services', [])
 
     },
     getRoomById: function(roomId) {
+
+      var deferred = $q.defer();
 
       var P_Room = Parse.Object.extend("P_Room");
       var query = new Parse.Query(P_Room);
@@ -298,6 +293,24 @@ angular.module('hostelApp.services', [])
     }
   };
 })
+
+
+.factory('$localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
 
 
 .factory('Camera', ['$q', function($q) {

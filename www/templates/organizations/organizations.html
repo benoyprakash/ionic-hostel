@@ -9,16 +9,13 @@ displaying all organizations and for creating organizations
   </ion-nav-buttons>
   <ion-content>
     <ion-list>
-       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-model="organizationsList" ng-repeat="org in organizationsList" type="item-text-wrap" href="#/tab/settings/organizations/{{org.id}}">
-
-        <img ng-src="{{org.face}}">
-        {{organizationsList}}
+       <ion-item class="item-remove-animate item-avatar item-icon-right"  ng-repeat="org in organizationsList | orderBy : 'name'" type="item-text-wrap" href="#/tab/settings/organizations/{{org.objectId}}">
+       <img ng-src="{{org.logo}}">
         <h2>{{org.name}}</h2>
         <p>{{org.address1}}</p>
+        <p>{{org.phone}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
+        
       </ion-item>
     </ion-list>
     
