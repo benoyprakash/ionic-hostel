@@ -5,10 +5,9 @@
       <div class="item item-body">
         Your Current Organization is : 
 
-<select ng-model="selectedOrg"
-        ng-change="selectCurrentOrg()" 
-        ng-options="org.objectId as org.name for org in  organizationsList" ng-selected="selectedOrg"></select>
-{{selectedOrg}}
+<select ng-model="dashCS.selectedOrg"
+        ng-change="dashCS.selectCurrentOrg()" 
+        ng-options="org as org.name for org in organizationsList" ></select>
 
       </div>
     </div>

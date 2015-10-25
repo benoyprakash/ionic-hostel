@@ -1,14 +1,19 @@
 angular.module('hostelApp.controllers', [])
 
-.controller('DashCtrl', function($rootScope, $scope, $localstorage, OrganizationsFactory) {
+.controller('DashCtrl', function($rootScope, $scope, $localstorage,$state,  OrganizationsFactory) {
 
-   var localActiveOrg = $localstorage.getObject('activeOrg');
-    if(localActiveOrg == null || localActiveOrg === "\"undefined\""){
-        $scope.selectedOrg = {};
-    } else {
-      $scope.selectedOrg = localActiveOrg;
-      console.log("fetching from local storage : " + $scope.selectedOrg);
-    }
+    $scope.dashCS = {};
+    $scope.dashCS.selectedOrg = {};
+    
+    var localActiveOrg = $localstorage.getObject('activeOrg');
+     
+      if(localActiveOrg !== "undefined"){
+          $scope.dashCS.selectedOrg = localActiveOrg;
+
+      } else {
+        console.log("fetched data from LS : "+ localActiveOrg);
+
+      }
 
     // ------------------------------------------------------------------
 
@@ -26,8 +31,14 @@ angular.module('hostelApp.controllers', [])
           console.log(error);
       });
     // ------------------------------------------------------------------
-    $scope.selectCurrentOrg = function() {
-      $localstorage.setObject('activeOrg', $scope.selectedOrg);
+
+    $scope.dashCS.selectCurrentOrg = function() {
+
+      if($scope.dashCS.selectedOrg !== null && $scope.dashCS.selectedOrg !== "undefined"){
+        $localstorage.setObject('activeOrg', $scope.dashCS.selectedOrg);
+      }
+      
+
     };
     // ------------------------------------------------------------------
 
@@ -120,10 +131,7 @@ angular.module('hostelApp.controllers', [])
 
 .controller('OrganizationDetailsCtrl', function($scope, $stateParams, OrganizationsFactory) {
 
-    $scope.currentOrganization = {
-      name : "Benoy",
-      address1 : "Kerala"
-    };
+    $scope.currentOrganization = {};
     
     $scope.promise = OrganizationsFactory.getOrgById($stateParams.orgId); 
     $scope.promise

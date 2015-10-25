@@ -61,12 +61,9 @@ angular.module('hostelApp.services', [])
       var P_Organization = Parse.Object.extend("P_Organization");
       var query = new Parse.Query(P_Organization);
 
-
-      
         query.find({
           success: function(orgList) {
             // The object was retrieved successfully.
-            //defer.resolve(organizationsList);
             deferred.resolve(orgList);
           },
           error: function(object, error) {
@@ -87,7 +84,6 @@ angular.module('hostelApp.services', [])
         query.find({
           success: function(organization) {
             // The object was retrieved successfully.
-            //defer.resolve(organizationsList);
             deferred.resolve(organization);
           },
           error: function(object, error) {
@@ -98,10 +94,16 @@ angular.module('hostelApp.services', [])
       return deferred.promise;
     }, 
     saveOrganization: function(organization){
+      
+      var p_organization = {};
 
-
+      if(organization != null && organization.objectId != null){
+          p_organization.objectId = organization.objectId;
+      } else{
         var P_Organization = Parse.Object.extend("P_Organization");
-        var p_organization = new P_Organization();
+        p_organization = new P_Organization();
+      }
+
 
 
       p_organization.set("name", organization.name);
@@ -116,7 +118,7 @@ angular.module('hostelApp.services', [])
         p_organization.save(null, {
           success: function(newP_organization) {
             // Execute any logic that should take place after the object is saved.
-            console.log('New object created with objectId: ' + newP_organization.id);
+            console.log('Object created / updated with objectId: ' + newP_organization.id);
             alert("Organization saved successfully.");
           },
           error: function(newP_organization, error) {
@@ -161,7 +163,7 @@ angular.module('hostelApp.services', [])
         query.get({
           success: function(rooms) {
             // The object was retrieved successfully.
-            console.log(JSON.stringify(rooms));
+            //console.log(JSON.stringify(rooms));
             return rooms;
           },
           error: function(object, error) {
@@ -185,7 +187,7 @@ angular.module('hostelApp.services', [])
         query.get({
           success: function(rooms) {
             // The object was retrieved successfully.
-            console.log(JSON.stringify(rooms));
+            //console.log(JSON.stringify(rooms));
             return rooms;
           },
           error: function(object, error) {
@@ -209,7 +211,7 @@ angular.module('hostelApp.services', [])
         query.get({
           success: function(rooms) {
             // The object was retrieved successfully.
-            console.log(JSON.stringify(rooms));
+            //console.log(JSON.stringify(rooms));
             return rooms;
           },
           error: function(object, error) {
@@ -253,7 +255,7 @@ angular.module('hostelApp.services', [])
         query.get({
           success: function(customers) {
             // The object was retrieved successfully.
-            console.log(JSON.stringify(customers));
+            //console.log(JSON.stringify(customers));
             return rooms;
           },
           error: function(object, error) {
@@ -276,7 +278,7 @@ angular.module('hostelApp.services', [])
         query.get({
           success: function(customers) {
             // The object was retrieved successfully.
-            console.log(JSON.stringify(customers));
+            //console.log(JSON.stringify(customers));
             return customers;
           },
           error: function(object, error) {
@@ -285,7 +287,6 @@ angular.module('hostelApp.services', [])
             // error is a Parse.Error with an error code and message.
           }
         });
-
 
       return null;
 
@@ -298,7 +299,7 @@ angular.module('hostelApp.services', [])
 .factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {
-      $window.localStorage[key] = value;
+    $window.localStorage[key] = value;
     },
     get: function(key, defaultValue) {
       return $window.localStorage[key] || defaultValue;
