@@ -1,10 +1,10 @@
 angular.module('hostelApp.controllers', [])
 
-.controller('DashCtrl', function($rootScope, $scope, $localstorage,$state,  OrganizationsFactory) {
+.controller('DashCtrl', function($scope, $localstorage, OrganizationsFactory) {
 
     $scope.dashCS = {};
     $scope.dashCS.selectedOrg = {};
-    
+
     var localActiveOrg = $localstorage.getObject('activeOrg');
      
       if(localActiveOrg !== "undefined"){
@@ -128,31 +128,54 @@ angular.module('hostelApp.controllers', [])
       });
 })
 
+.controller('NewOrganizationDetailsCtrl', function($scope, $state) {
 
+    $scope.orgDtlCS = {};
+    $scope.orgDtlCS.currentOrganization = {};
+
+})
 .controller('OrganizationDetailsCtrl', function($scope, $stateParams, OrganizationsFactory) {
 
-    $scope.currentOrganization = {};
-    
+    $scope.orgDtlCS = {};
+    $scope.orgDtlCS.currentOrganization = {};
+
+
     $scope.promise = OrganizationsFactory.getOrgById($stateParams.orgId); 
     $scope.promise
     .then(
       function(data){
         if(data.length > 0){
-        var jsonString = JSON.stringify(data[0]);
-        $scope.currentOrganization = JSON.parse(jsonString);
+
+            var jsonString = JSON.stringify(data[0]);
+            $scope.orgDtlCS.currentOrganization = JSON.parse(jsonString);
         }
 
 
        }, function(error){
           alert(error);
       });
-  
-    // $scope.saveOrganizationDetails = function(){
-    //   alert($stateParams.orgId);
-    // }
 
+
+
+  
   $scope.saveOrganizationDetails = function(){
-    OrganizationsFactory.saveOrganization($scope.currentOrganization);
+    console.log("model at ctrl : " + JSON.stringify($scope.orgDtlCS.currentOrganization));
+    OrganizationsFactory.show();
+    $scope.promise = OrganizationsFactory.saveOrganization($scope.orgDtlCS.currentOrganization);
+        $scope.promise
+    .then(
+      function(data){
+        OrganizationsFactory.hide();
+
+
+       }, function(error){
+          alert(error);
+          OrganizationsFactory.hide();
+      });
+    OrganizationsFactory.hide();
+    $scope.apply();
+    $window.location.href = '/tab/dash'; 
+
   };
 })
 
@@ -165,7 +188,4 @@ angular.module('hostelApp.controllers', [])
   $scope.room = RoomsFactory.getRoomById($stateParams.roomId);
 })
 
-
 ;
-
-

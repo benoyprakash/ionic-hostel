@@ -49,88 +49,7 @@ angular.module('hostelApp.services', [])
   };
 })
 
-.factory('OrganizationsFactory', function($q) {
 
-  return {
-
-//[{"address1":"Kerala","address2":"India","address3":"Asia","comments":"Nil","contactPerson":"Benoy","name":"Ramdas","phone":987987987,"objectId":"4OKtlbTSBn","createdAt":"2015-10-16T17:37:19.062Z","updatedAt":"2015-10-16T17:37:19.062Z"}
-    all: function() {
-      
-      var deferred = $q.defer();
-
-      var P_Organization = Parse.Object.extend("P_Organization");
-      var query = new Parse.Query(P_Organization);
-
-        query.find({
-          success: function(orgList) {
-            // The object was retrieved successfully.
-            deferred.resolve(orgList);
-          },
-          error: function(object, error) {
-            deferred.reject(error);
-          }
-        });
-
-      return deferred.promise;
-    },
-
-
-    getOrgById: function(orgId) {
-      var deferred = $q.defer();
-
-      var P_Organization = Parse.Object.extend("P_Organization");
-      var query = new Parse.Query(P_Organization);
-      query.equalTo("objectId", orgId);      
-        query.find({
-          success: function(organization) {
-            // The object was retrieved successfully.
-            deferred.resolve(organization);
-          },
-          error: function(object, error) {
-            deferred.reject(error);
-          }
-        });
-
-      return deferred.promise;
-    }, 
-    saveOrganization: function(organization){
-      
-      var p_organization = {};
-
-      if(organization != null && organization.objectId != null){
-          p_organization.objectId = organization.objectId;
-      } else{
-        var P_Organization = Parse.Object.extend("P_Organization");
-        p_organization = new P_Organization();
-      }
-
-
-
-      p_organization.set("name", organization.name);
-      p_organization.set("phone", organization.phone);
-      p_organization.set("address1", organization.address1);
-      p_organization.set("address2", organization.address2);
-      p_organization.set("address3", organization.address3);
-      p_organization.set("contactPerson", organization.contactPerson);
-      p_organization.set("comments", organization.comments);
-      console.log("before save"+ JSON.stringify(p_organization));
-
-        p_organization.save(null, {
-          success: function(newP_organization) {
-            // Execute any logic that should take place after the object is saved.
-            console.log('Object created / updated with objectId: ' + newP_organization.id);
-            alert("Organization saved successfully.");
-          },
-          error: function(newP_organization, error) {
-            // Execute any logic that should take place if the save fails.
-            // error is a Parse.Error with an error code and message.
-            console.log('Failed to create new object, with error code: ' + error.message);
-            alert("Failed to save Organization data. Please try again.");
-          }
-        });
-    }
-  };
-})
 
 .factory('RoomsFactory', function($q) {
   // Might use a resource here that returns a JSON array
@@ -331,4 +250,6 @@ angular.module('hostelApp.services', [])
     }
   }
 }
+
+
 ]);

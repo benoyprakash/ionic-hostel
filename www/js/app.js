@@ -7,7 +7,7 @@ Parse.initialize("dpYWs0Je7RriOjJ7faB9YYtyCuDTy5X7AaSKLQeT", "bHwxcFBPgJlpTVAsXY
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('hostelApp', ['ionic', 'hostelApp.controllers', 'hostelApp.services'])
+angular.module('hostelApp', ['ionic', 'hostelApp.controllers', 'hostelApp.services', 'hostelApp.organizationFactory'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -98,6 +98,16 @@ angular.module('hostelApp', ['ionic', 'hostelApp.controllers', 'hostelApp.servic
         'tab-settings': {
           templateUrl: 'templates/organizations/organization-detail.html',
           controller: 'OrganizationDetailsCtrl'
+        }
+      }
+  })
+
+    .state('tab.settings-organization-new', {
+    url: '/settings/organizations/new',
+      views: {
+        'tab-settings': {
+          templateUrl: 'templates/organizations/organization-detail.html',
+          controller: 'NewOrganizationDetailsCtrl'
         }
       }
   })
