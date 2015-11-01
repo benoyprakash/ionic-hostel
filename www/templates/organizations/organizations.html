@@ -9,7 +9,7 @@ displaying all organizations and for creating organizations
   </ion-nav-buttons>
   <ion-content>
     <ion-list>
-       <ion-item class="item-remove-animate item-avatar item-icon-right"  ng-repeat="org in organizationsList | orderBy : 'name'" type="item-text-wrap" href="#/tab/settings/organizations/{{org.objectId}}">
+       <ion-item class="item-remove-animate item-avatar item-icon-right"  ng-repeat="org in organizationsList | orderBy : 'name'" type="item-text-wrap" href="#/tab/settings/organizations/{{org.objectId}}" on-hold="showActionSheet(org.objectId, org.name)">
        <img ng-src="{{org.logo}}">
         <h2>{{org.name}}</h2>
         <p>{{org.address1}}</p>

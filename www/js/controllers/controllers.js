@@ -101,15 +101,12 @@ angular.module('hostelApp.controllers', [])
 
 })
 
-.controller('SettingsCtrl', function($scope, Chats) {
+.controller('SettingsCtrl', function($scope, $ionicActionSheet, $timeout) {
 
-  $scope.settings = Chats.all();
-  $scope.currentOrg = {
-    enableFriends: true
-  };
+
 })
 
-.controller('OrganizationsCtrl', function($scope, $timeout,  OrganizationsFactory) {
+.controller('OrganizationsCtrl', function($scope, $timeout, $ionicActionSheet, OrganizationsFactory) {
 
     $scope.organizationsList = [];
     $scope.promise = OrganizationsFactory.all(); 
@@ -126,6 +123,71 @@ angular.module('hostelApp.controllers', [])
       }, function(error){
           alert(error);
       });
+
+    // Triggered on a button click, or some other target
+ $scope.showActionSheet = function(orgId, orgName) {
+
+    var orgId = orgId;
+    var selectedOrg = {};
+
+
+   // Show the action sheet
+   var hideSheet = $ionicActionSheet.show({
+
+     // buttons: [
+     //   { text: 'Deactivate' + orgId },
+     //   { text: 'Move' }
+     // ],
+     destructiveText: 'Delete ' + orgName,
+     titleText: 'Actions',
+     cancelText: 'Cancel',
+     cancel: function() {
+          // add cancel code..
+        },
+     buttonClicked: function(index) {
+      alert(index);
+       return true;
+     }, 
+     destructiveButtonClicked : function(){
+        console.log("Delete the organization with id : " + orgId);
+
+          $scope.promise = OrganizationsFactory.getOrgById(orgId); 
+          $scope.promise
+          .then(
+            function(data){
+              if(data.length > 0){
+                  var jsonString = JSON.stringify(data[0]);
+                  var p_selectedOrg = JSON.parse(jsonString);
+
+                  p_selectedOrg.status = "deleted";
+
+                  $scope.promise = OrganizationsFactory.saveOrganization(p_selectedOrg);
+                    $scope.promise
+                        .then(
+                          function(data){
+                            hideSheet();
+                              alert("Deleted");
+                           }, function(error){
+                              alert("Unable to process your request. Please try after sometime");
+                          });
+                         }
+                       });
+              }
+             
+
+
+   }, function(error){
+                alert(error);
+            });
+
+
+
+   // For example's sake, hide the sheet after two seconds
+   // $timeout(function() {
+   //   hideSheet();
+   // }, 20000);
+
+ };
 })
 
 .controller('NewOrganizationDetailsCtrl', function($scope, $state) {
@@ -173,8 +235,6 @@ angular.module('hostelApp.controllers', [])
           OrganizationsFactory.hide();
       });
     OrganizationsFactory.hide();
-    $scope.apply();
-    $window.location.href = '/tab/dash'; 
 
   };
 })

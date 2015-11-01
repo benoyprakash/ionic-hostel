@@ -11,7 +11,7 @@ angular.module('hostelApp.organizationFactory', [])
 
       var P_Organization = Parse.Object.extend("P_Organization");
       var query = new Parse.Query(P_Organization);
-
+      query.equalTo("status", "active");
         query.find({
           success: function(orgList) {
             // The object was retrieved successfully.
@@ -50,11 +50,8 @@ angular.module('hostelApp.organizationFactory', [])
       var P_Organization = Parse.Object.extend("P_Organization");
       var p_organization = new P_Organization();
 
-      if(organization !== null && organization.objectId !== null){
-          p_organization.set("objectId", organization.objectId);
-      } 
-
       p_organization.set("name", organization.name);
+      p_organization.set("status", organization.status);
       p_organization.set("phone", organization.phone);
       p_organization.set("address1", organization.address1);
       p_organization.set("address2", organization.address2);
@@ -62,6 +59,12 @@ angular.module('hostelApp.organizationFactory', [])
       p_organization.set("contactPerson", organization.contactPerson);
       p_organization.set("comments", organization.comments);
       p_organization.set("logo", organization.logo);
+
+      if(organization !== null && organization.objectId !== null){
+          p_organization.set("objectId", organization.objectId);
+
+      } 
+      
       console.log("before save"+ JSON.stringify(p_organization));
 
         p_organization.save(null, {
