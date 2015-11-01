@@ -7,133 +7,140 @@ Parse.initialize("dpYWs0Je7RriOjJ7faB9YYtyCuDTy5X7AaSKLQeT", "bHwxcFBPgJlpTVAsXY
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('hostelApp', ['ionic', 'hostelApp.controllers', 'hostelApp.services', 'hostelApp.organizationFactory'])
+angular.module('hostelApp', ['ionic', 'hostelApp.controllers',
+ 'hostelApp.services', 
+ 'hostelApp.organizationFactory', 
+ 'hostelApp.roomsfactory' ])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+    $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleLightContent();
-    }
-  });
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleLightContent();
+        }
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
+    // Ionic uses AngularUI Router which uses the concept of states
+    // Learn more here: https://github.com/angular-ui/ui-router
+    // Set up the various states which the app can be in.
+    // Each state's controller can be found in controllers.js
+    $stateProvider
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/dashboard/dashboard.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.customers', {
-    url: '/customers',
-      views: {
-        'tab-customers': {
-          templateUrl: 'templates/customers/customers.html',
-          controller: 'CustomersCtrl'
-        }
-      }
-  })
-    .state('tab.customer-details', {
-      url: '/customers/:custId',
-      views: {
-        'tab-customers': {
-          templateUrl: 'templates/customers/customer-details.html',
-          controller: 'CustomerDetailsCtrl'
-        }
-      }
+    // setup an abstract state for the tabs directive
+        .state('tab', {
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html'
     })
 
-    .state('tab.settings', {
-    url: '/settings',
-      views: {
-        'tab-settings': {
-          templateUrl: 'templates/settings/settings.html',
-          controller: 'SettingsCtrl'
+    // Each tab has its own nav history stack:
+    .state('tab.dash', {
+        cache: false,
+        url: '/dash',
+        views: {
+            'tab-dash': {
+                templateUrl: 'templates/dashboard/dashboard.html',
+                controller: 'DashCtrl'
+            }
         }
-      }
-  })
+    })
 
-  .state('tab.settings-organizationList', {
-    url: '/settings/organizations',
-      views: {
-        'tab-settings': {
-          templateUrl: 'templates/organizations/organizations.html',
-          controller: 'OrganizationsCtrl'
+
+    .state('tab.customers', {
+        url: '/customers',
+        views: {
+            'tab-customers': {
+                templateUrl: 'templates/customers/customers.html',
+                controller: 'CustomersCtrl'
+            }
         }
-      }
-  })
+    })
+
+
+    .state('tab.customer-details', {
+        url: '/customers/:custId',
+        views: {
+            'tab-customers': {
+                templateUrl: 'templates/customers/customer-details.html',
+                controller: 'CustomerDetailsCtrl'
+            }
+        }
+    })
+
+
+    .state('tab.settings', {
+        cache: false,
+        url: '/settings',
+        views: {
+            'tab-settings': {
+                templateUrl: 'templates/settings/settings.html',
+                controller: 'SettingsCtrl'
+            }
+        }
+    })
+
+    .state('tab.settings-organizationList', {
+        url: '/settings/organizations',
+        views: {
+            'tab-settings': {
+                templateUrl: 'templates/organizations/organizations.html',
+                controller: 'OrganizationsCtrl'
+            }
+        }
+    })
 
 
     .state('tab.settings-organization', {
-    url: '/settings/organizations/:orgId',
-      views: {
-        'tab-settings': {
-          templateUrl: 'templates/organizations/organization-detail.html',
-          controller: 'OrganizationDetailsCtrl'
+        url: '/settings/organizations/:orgId',
+        views: {
+            'tab-settings': {
+                templateUrl: 'templates/organizations/organization-detail.html',
+                controller: 'OrganizationDetailsCtrl'
+            }
         }
-      }
-  })
+    })
 
     .state('tab.settings-organization-new', {
-    url: '/settings/organizations/new',
-      views: {
-        'tab-settings': {
-          templateUrl: 'templates/organizations/organization-detail.html',
-          controller: 'NewOrganizationDetailsCtrl'
+        url: '/settings/organizations/new',
+        views: {
+            'tab-settings': {
+                templateUrl: 'templates/organizations/organization-detail.html',
+                controller: 'NewOrganizationDetailsCtrl'
+            }
         }
-      }
-  })
+    })
 
     .state('tab.rooms', {
-      url: '/rooms',
-      views: {
-        'tab-rooms': {
-          templateUrl: 'templates/rooms/rooms.html',
-          controller: 'RoomsCtrl'
+        url: '/rooms',
+        views: {
+            'tab-rooms': {
+                templateUrl: 'templates/rooms/rooms.html',
+                controller: 'RoomsCtrl'
+            }
         }
-      }
     })
 
-      .state('tab.rooms-details', {
-      url: '/rooms/:roomId',
-      views: {
-        'tab-rooms': {
-          templateUrl: 'templates/rooms/room-details.html',
-          controller: 'RoomDetailCtrl'
+    .state('tab.rooms-details', {
+        url: '/rooms/:roomId',
+        views: {
+            'tab-rooms': {
+                templateUrl: 'templates/rooms/room-details.html',
+                controller: 'RoomDetailCtrl'
+            }
         }
-      }
-    })
-  ;
+    });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/tab/dash');
 
 });
